@@ -1,6 +1,6 @@
 class FilmsController < ApplicationController
   before_action :set_film, only: [:show, :edit, :update, :destroy]
-
+  protect_from_forgery with: :null_session
   # GET /films
   # GET /films.json
   def index
