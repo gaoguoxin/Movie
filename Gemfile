@@ -42,3 +42,4 @@ group :development, :test do
 end
 
 gem 'mongoid', github: 'mongoid/mongoid'
+gem 'unicorn'

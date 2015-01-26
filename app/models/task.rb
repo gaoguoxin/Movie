@@ -16,7 +16,7 @@ class Task
 
   def self.get_site_task(website)
     task = self.where(site:website,status:STATUS_UNDOING).first
-    task.update_attributes(:status:STATUS_DOING)
+    task.update_attributes(status:STATUS_DOING)
     return task 
   end
 
