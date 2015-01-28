@@ -24,12 +24,13 @@ class Task
   end
 
   def self.update_task(params)
-  	task = self.where(site:params[:from],task_url:params[:url]).first
+        params = JSON.parse(params)
+  	task = self.where(site:params["from"],task_url:params["url"]).first
   	return false unless task.present?
-  	if (!task.parent_url.present? && params[:child_url].present?)
-    	params[:child_url].each do |url|
+  	if (!task.parent_url.present? && params["child_url"].present?)
+    	params["child_url"].each do |url|
     		t = Task.where(task_url:url).first
-    		Task.create(task_url:url,parent_url:params[:child_url],site:params[:site],title:task.title) unless t.present?
+    		Task.create(task_url:url,parent_url:task.task_url,site:params[:from],title:task.title) unless t.present?
     	end 
   	end
 
@@ -38,32 +39,32 @@ class Task
   		unless film.present?
   			Film.create(
   				title:task.title,
-  				director:params[:basic_info][:director],
-  				area:params[:basic_info][:area],
-  				actors:params[:basic_info][:actors].gsub!('\n',''),
-  				types:params[:basic_info][:types].gsub!('\n','').gsub!('\t',''),
-  				descript:params[:basic_info][:desc]
+  				director:params["basic_info"]["director"],
+  				area:params["basic_info"]["area"],
+  				actors:params["basic_info"]["actors"].gsub!('\n',''),
+  				types:params["basic_info"]["types"].gsub!('\n','').gsub!('\t',''),
+  				descript:params["basic_info"]["desc"]
   			)
   		end
   		task.update_attributes(status:STATUS_COMPLETED)
   	else
   		film = File.where(task_url:task.parent_url).first
   		return false unless film.present?
-  		if params[:type].to_s == '1' # 正片
-  		  film.basic_info["#{params[:site]}".to_sym][1] = {
+  		if params["type"].to_s == '1' # 正片
+  		  film.basic_info["#{params['site']}".to_sym][1] = {
   		  	url:task.url,
-  		  	up_count:params[:up_count],
-  		  	down_count:params[:down_count],
-  		  	comment_count:params[:comment_count],
-  		  	play_count:params[:play_count]
+  		  	up_count:params["up_count"],
+  		  	down_count:params["down_count"],
+  		  	comment_count:params["comment_count"],
+  		  	play_count:params["play_count"]
   		  }
   		else #预告或片花
-  		  film.basic_info["#{params[:site]}".to_sym][0] << {
+  		  film.basic_info["#{params['site']}".to_sym][0] << {
   		  	url:task.url,
-  		  	up_count:params[:up_count],
-  		  	down_count:params[:down_count],
-  		  	comment_count:params[:comment_count],
-  		  	play_count:params[:play_count]
+  		  	up_count:params["up_count"],
+  		  	down_count:params["down_count"],
+  		  	comment_count:params["comment_count"],
+  		  	play_count:params["play_count"]
   		  }  		  
   		end
   		task.update_attributes(status:STATUS_COMPLETED)
