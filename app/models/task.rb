@@ -19,16 +19,13 @@ class Task
 
   def self.get_site_task(website)
     task = self.where(site:website,status:STATUS_UNDOING).first
-    Rails.logger.info('----------------------')
-    Rails.logger.info(task.inspect)
-    Rails.logger.info('----------------------')
     task.update_attributes(status:STATUS_DOING)
     return task 
   end
 
   def self.update_task(params)
     Rails.logger.info('------------------------------------------------')
-    Rails.loggger.info(params.inspect)
+    Rails.logger.info(params.inspect)
     Rails.logger.info('------------------------------------------------')
   	task = self.where(site:params[:site],task_url:params[:url]).first
   	return false unless task.present?
