@@ -66,7 +66,7 @@ class Task
   		if params["type"].to_s == '1' # 正片
           Rails.logger.info('444444444444444444444444444444')
   		  film.basic_info["#{params['site']}".to_sym][1] = {
-  		  	url:task.url,
+  		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
   		  	comment_count:params["comment_count"],
@@ -75,7 +75,7 @@ class Task
   		else #预告或片花
         Rails.logger.info('5555555555555555555555555555')
   		  film.basic_info["#{params['site']}".to_sym][0] << {
-  		  	url:task.url,
+  		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
   		  	comment_count:params["comment_count"],
