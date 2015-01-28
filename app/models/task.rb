@@ -27,6 +27,9 @@ class Task
   end
 
   def self.update_task(params)
+    Rails.logger.info('------------------------------------------------')
+    Rails.loggger.info(params.inspect)
+    Rails.logger.info('------------------------------------------------')
   	task = self.where(site:params[:site],task_url:params[:url]).first
   	return false unless task.present?
   	if (!task.parent_url.present? && params[:children_url].present?)

@@ -43,3 +43,4 @@ end
 
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'unicorn'
+gem 'pry'
