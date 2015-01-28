@@ -64,8 +64,8 @@ class Task
       Rails.logger.info('-------------------dddddddddddddd------------------')
   		return false unless film.present?
   		if params["type"].to_s == '1' # 正片
-          Rails.logger.info('444444444444444444444444444444')
-  		  film.basic_info["#{params['site']}".to_sym][1] = {
+        Rails.logger.info('444444444444444444444444444444')
+  		  film.basic_info["#{params['from']}".to_sym][1] = {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
@@ -74,7 +74,7 @@ class Task
   		  }
   		else #预告或片花
         Rails.logger.info('5555555555555555555555555555')
-  		  film.basic_info["#{params['site']}".to_sym][0] << {
+  		  film.basic_info["#{params['from']}".to_sym][0] << {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
