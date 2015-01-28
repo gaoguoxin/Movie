@@ -54,7 +54,7 @@ class FilmsController < ApplicationController
     task = Task.get_site_task(params[:site])
     success = false 
     success = true if task.present?
-    render :json =>{success:success,url:task.task_url,parent_url:task.parent_url}
+    render :json =>{success:success,url:task.try(:task_url),parent_url:task.try(:parent_url)}
   end
 
   # DELETE /films/1
