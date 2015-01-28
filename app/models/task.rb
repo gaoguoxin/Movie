@@ -54,12 +54,7 @@ class Task
   		film = Film.where(title:task.title).first
   		return false unless film.present?
   		if params["type"].to_s == '1' # 正片
-        Rails.logger.info('--------------正片信息收录中。。。。。--------------')
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
-        Rails.logger.info(film.basic_info["#{params['from']}"])
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
-        Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')          
+        Rails.logger.info('--------------正片信息收录中。。。。。--------------')       
   		  film.basic_info["#{params['from']}"]["1"] = {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
@@ -67,20 +62,17 @@ class Task
   		  	comment_count:params["comment_count"],
   		  	play_count:params["play_count"]
   		  }
+        film.save
   		else #预告或片花
         Rails.logger.info('--------------预告信息收录中。。。。---------------')
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
-        Rails.logger.info(film.basic_info["#{params['from']}"])
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
-        Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
   		  film.basic_info["#{params['from']}"]["0"] << {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
   		  	comment_count:params["comment_count"],
   		  	play_count:params["play_count"]
-  		  }  		  
+  		  }
+        film.save  		  
   		end
   		task.update_attributes(status:STATUS_COMPLETED)
   	end
