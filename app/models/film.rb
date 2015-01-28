@@ -1,7 +1,6 @@
 class Film
   include Mongoid::Document
   field :title, type: String
-  field :task_url, type: String
   field :director,type:String
   field :area,type:String
   field :actors,type:String

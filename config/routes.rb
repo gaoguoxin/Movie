@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   
-  root 'films#index'
+  root 'films#new'
 
   resources :films do 
     collection do 
       post 'data'
+      get  'get_task'
       post 'finish_task'
     end
   end
+
+  resources :tasks
 
 
 

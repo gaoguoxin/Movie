@@ -1,20 +1,17 @@
 class FilmsController < ApplicationController
-  before_action :set_film, only: [:show, :edit, :update, :destroy]
   protect_from_forgery with: :null_session
-  # GET /films
-  # GET /films.json
+
   def index
-    @films = Film.all
+      
   end
 
-  # GET /films/1
-  # GET /films/1.json
   def show
   end
 
+
   # GET /films/new
   def new
-    @film = Film.new
+    @task = Task.new
   end
 
   # GET /films/1/edit
@@ -24,15 +21,11 @@ class FilmsController < ApplicationController
   # POST /films
   # POST /films.json
   def create
-    @film = Film.new(film_params)
+    @task = Task.new(task_params)
 
     respond_to do |format|
-      if @film.save
-        format.html { redirect_to @film, notice: 'Film was successfully created.' }
-        format.json { render :show, status: :created, location: @film }
-      else
-        format.html { render :new }
-        format.json { render json: @film.errors, status: :unprocessable_entity }
+      if @task.save
+        format.html { redirect_to root_path, notice: '创建成功' }
       end
     end
   end
@@ -53,7 +46,8 @@ class FilmsController < ApplicationController
 
   #ajax server
   def finish_task
-    Task.update_task(params)
+    result = Task.update_task(params)
+    render :json => {success:result}
   end
 
   def get_task   
@@ -75,6 +69,10 @@ class FilmsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_film
       @film = Film.find(params[:id])
+    end
+
+    def task_params
+      params.require(:task).permit(:title, :site, :task_url)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
