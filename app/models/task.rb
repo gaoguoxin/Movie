@@ -11,7 +11,7 @@ class Task
   field :site  #网站名称
   field :task_url #任务链接地址
   field :parent_url #衍生出的链接地址
-  field :status,default:STATUS_UNDOING   #任务执行状态
+  field :status,default:STATUS_UNDOING,default:STATUS_UNDOING   #任务执行状态
 
   def self.avalible_site
     return [['土豆网','tudou'],['优酷网','youku'],['腾讯网','tecent'],['爱奇艺','iqiyi']]
@@ -19,6 +19,9 @@ class Task
 
   def self.get_site_task(website)
     task = self.where(site:website,status:STATUS_UNDOING).first
+    Rails.logger.info('----------------------')
+    Rails.logger.info(task.inspect)
+    Rails.logger.info('----------------------')
     task.update_attributes(status:STATUS_DOING)
     return task 
   end

@@ -52,7 +52,10 @@ class FilmsController < ApplicationController
 
   def get_task   
     task = Task.get_site_task(params[:site])
-    render :json =>{succuss:true,url:task.task_url,parent_url:task.parent_url}
+    Rails.logger.info('-------------------------------')
+    Rails.logger.info(task.task_url)
+    Rails.logger.info('-------------------------------')
+    render :json =>{success:true,url:task.task_url,parent_url:task.parent_url}
   end
 
   # DELETE /films/1
