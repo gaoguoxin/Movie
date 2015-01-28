@@ -53,7 +53,7 @@ class FilmsController < ApplicationController
   def get_task   
     task = Task.get_site_task(params[:site])
     success = false 
-    success = true if task.present
+    success = true if task.present?
     render :json =>{success:success,url:task.task_url,parent_url:task.parent_url}
   end
 
