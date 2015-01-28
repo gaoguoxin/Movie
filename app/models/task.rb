@@ -19,23 +19,17 @@ class Task
 
   def self.get_site_task(website)
     task = self.where(site:website,status:STATUS_UNDOING).first
-    task.update_attributes(status:STATUS_DOING)
+    task.update_attributes(status:STATUS_DOING) if task.present?
     return task 
   end
 
   def self.update_task(params)
-    params = JSON.parse(params)
-    Rails.logger.info('-----------------------------------------------')
-    Rails.logger.info(params)
-    Rails.logger.info('-----------------------------------------------')         
+    params = JSON.parse(params)       
   	task = self.where(site:params["from"],task_url:params["url"]).first
     task = self.where(site:params["from"],task_url:params["ref_url"]).first unless task.present?
-    Rails.logger.info('===============================================')
-    Rails.logger.info(task.inspect)
-    Rails.logger.info('===============================================')
   	return false unless task.present?
   	if (!task.parent_url.present? && params["child_url"].present?)
-        Rails.logger.info('111111111111111111111111111')
+      Rails.logger.info('------------基本信息收录中。。。。。-----------------')
     	params["child_url"].each do |url|
     		t = Task.where(task_url:url).first
     		Task.create(task_url:url,parent_url:task.task_url,site:params["from"],title:task.title) unless t.present?
@@ -43,9 +37,9 @@ class Task
   	end
 
   	unless task.parent_url.present?
-      Rails.logger.info('2222222222222222222222222')
   		film = Film.where(title:task.title).first
   		unless film.present?
+        Rails.logger.info('----------------创建电影中。。。。。-------------------------')
   			Film.create(
   				title:task.title,
   				director:params["basic_info"]["director"],
@@ -57,14 +51,15 @@ class Task
   		end
   		task.update_attributes(status:STATUS_COMPLETED)
   	else
-      Rails.logger.info('33333333333333333333333333333333')
   		film = Film.where(title:task.title).first
-      Rails.logger.info('-------------------dddddddddddddd------------------')
-      Rails.logger.info(film.inspect)
-      Rails.logger.info('-------------------dddddddddddddd------------------')
   		return false unless film.present?
   		if params["type"].to_s == '1' # 正片
-        Rails.logger.info('444444444444444444444444444444')
+        Rails.logger.info('--------------正片信息收录中。。。。。--------------')
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
+        Rails.logger.info(film.basic_info["#{params['from']}"])
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
+        Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')        
   		  film.basic_info["#{params['from']}".to_sym][1] = {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
@@ -73,7 +68,12 @@ class Task
   		  	play_count:params["play_count"]
   		  }
   		else #预告或片花
-        Rails.logger.info('5555555555555555555555555555')
+        Rails.logger.info('--------------预告信息收录中。。。。---------------')
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
+        Rails.logger.info(film.basic_info["#{params['from']}"])
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
+        Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
   		  film.basic_info["#{params['from']}".to_sym][0] << {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
