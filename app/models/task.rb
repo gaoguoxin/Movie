@@ -25,32 +25,37 @@ class Task
 
   def self.update_task(params)
         params = JSON.parse(params)
+         
   	task = self.where(site:params["from"],task_url:params["url"]).first
   	return false unless task.present?
   	if (!task.parent_url.present? && params["child_url"].present?)
+        Rails.logger.info('111111111111111111111111111')
     	params["child_url"].each do |url|
     		t = Task.where(task_url:url).first
-    		Task.create(task_url:url,parent_url:task.task_url,site:params[:from],title:task.title) unless t.present?
+    		Task.create(task_url:url,parent_url:task.task_url,site:params["from"],title:task.title) unless t.present?
     	end 
   	end
 
   	unless task.parent_url.present?
+        Rails.logger.info('2222222222222222222222222')
   		film = Film.where(title:task.title).first
   		unless film.present?
   			Film.create(
   				title:task.title,
   				director:params["basic_info"]["director"],
   				area:params["basic_info"]["area"],
-  				actors:params["basic_info"]["actors"].gsub!('\n',''),
-  				types:params["basic_info"]["types"].gsub!('\n','').gsub!('\t',''),
+  				actors:params["basic_info"]["actors"],
+  				types:params["basic_info"]["types"],
   				descript:params["basic_info"]["desc"]
   			)
   		end
   		task.update_attributes(status:STATUS_COMPLETED)
   	else
+                Rails.logger.info('33333333333333333333333333333333')
   		film = File.where(task_url:task.parent_url).first
   		return false unless film.present?
   		if params["type"].to_s == '1' # 正片
+                  Rails.logger.info('444444444444444444444444444444')
   		  film.basic_info["#{params['site']}".to_sym][1] = {
   		  	url:task.url,
   		  	up_count:params["up_count"],
@@ -59,6 +64,7 @@ class Task
   		  	play_count:params["play_count"]
   		  }
   		else #预告或片花
+                  Rails.logger.info('5555555555555555555555555555')
   		  film.basic_info["#{params['site']}".to_sym][0] << {
   		  	url:task.url,
   		  	up_count:params["up_count"],
