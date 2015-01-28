@@ -59,8 +59,8 @@ class Task
         Rails.logger.info(film.basic_info["#{params['from']}"])
         Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
         Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
-        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')        
-  		  film.basic_info["#{params['from']}".to_sym][1] = {
+        Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')          
+  		  film.basic_info["#{params['from']}"]["1"] = {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
@@ -74,7 +74,7 @@ class Task
         Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
         Rails.logger.info(film.basic_info["#{params['from']}".to_sym])
         Rails.logger.info('ddddddddddddddddddddddddddddddddddddddddddddddddd')
-  		  film.basic_info["#{params['from']}".to_sym][0] << {
+  		  film.basic_info["#{params['from']}"]["0"] << {
   		  	url:params["url"],
   		  	up_count:params["up_count"],
   		  	down_count:params["down_count"],
