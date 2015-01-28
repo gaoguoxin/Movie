@@ -43,7 +43,7 @@ class Task
   	end
 
   	unless task.parent_url.present?
-        Rails.logger.info('2222222222222222222222222')
+      Rails.logger.info('2222222222222222222222222')
   		film = Film.where(title:task.title).first
   		unless film.present?
   			Film.create(
@@ -58,7 +58,10 @@ class Task
   		task.update_attributes(status:STATUS_COMPLETED)
   	else
       Rails.logger.info('33333333333333333333333333333333')
-  		film = Film.where(task_url:task.parent_url).first
+  		film = Film.where(title:task.title).first
+      Rails.logger.info('-------------------dddddddddddddd------------------')
+      Rails.logger.info(film.inspect)
+      Rails.logger.info('-------------------dddddddddddddd------------------')
   		return false unless film.present?
   		if params["type"].to_s == '1' # 正片
           Rails.logger.info('444444444444444444444444444444')
