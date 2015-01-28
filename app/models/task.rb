@@ -24,7 +24,8 @@ class Task
   end
 
   def self.update_task(params)
-  	task = self.where(site:params[:from],task_url:params[:url]).first
+    
+  	task = self.where(site:params[:from],task_url:params[:url].to_s).first
   	return false unless task.present?
   	if (!task.parent_url.present? && params[:child_url].present?)
     	params[:child_url].each do |url|
