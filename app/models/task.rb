@@ -29,7 +29,7 @@ class Task
     Rails.logger.info(params)
     Rails.logger.info('-----------------------------------------------')         
   	task = self.where(site:params["from"],task_url:params["url"]).first
-    task = self.where(site:params["from"],task_url:params["ref_url"]).first
+    task = self.where(site:params["from"],task_url:params["ref_url"]).first unless task.present?
     Rails.logger.info('===============================================')
     Rails.logger.info(task.inspect)
     Rails.logger.info('===============================================')
