@@ -24,15 +24,12 @@ class Task
   end
 
   def self.update_task(params)
-    Rails.logger.info('------------------------------------------------')
-    Rails.logger.info(params.inspect)
-    Rails.logger.info('------------------------------------------------')
-  	task = self.where(site:params[:site],task_url:params[:url]).first
+  	task = self.where(site:params[:from],task_url:params[:url]).first
   	return false unless task.present?
-  	if (!task.parent_url.present? && params[:children_url].present?)
-    	params[:children_url].each do |url|
+  	if (!task.parent_url.present? && params[:child_url].present?)
+    	params[:child_url].each do |url|
     		t = Task.where(task_url:url).first
-    		Task.create(task_url:url,parent_url:params[:url],site:params[:site],title:task.title) unless t.present?
+    		Task.create(task_url:url,parent_url:params[:child_url],site:params[:site],title:task.title) unless t.present?
     	end 
   	end
 
@@ -43,8 +40,8 @@ class Task
   				title:task.title,
   				director:params[:basic_info][:director],
   				area:params[:basic_info][:area],
-  				actors:params[:basic_info][:actors],
-  				types:params[:basic_info][:types],
+  				actors:params[:basic_info][:actors].gsub!('\n',''),
+  				types:params[:basic_info][:types].gsub!('\n','').gsub!('\t',''),
   				descript:params[:basic_info][:desc]
   			)
   		end

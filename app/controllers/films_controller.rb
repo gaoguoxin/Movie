@@ -46,10 +46,7 @@ class FilmsController < ApplicationController
 
   #ajax server
   def finish_task
-    Rails.logger.info('----------------------------------------')
-    Rails.logger.info(JSON.parse(params[:data]))
-    Rails.logger.info('----------------------------------------')
-    result = Task.update_task(film_params)
+    result = Task.update_task(params[:data])
     render :json => {success:result}
   end
 
