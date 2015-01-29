@@ -3,8 +3,11 @@ class FilmsController < ActionController::API
   #protect_from_forgery with: :null_session
 
   def finish_task
-    result = Task.update_task(params[:data])
-    render :json => {success:result}
+    Rails.logger.info('------------------------------------')
+    Rails.logger.info(params.inspect)
+    Rails.logger.info('------------------------------------')
+    #result = Task.update_task(params[:data])
+    #render :json => {success:result}
   end
 
   def get_task   
