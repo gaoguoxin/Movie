@@ -1,0 +1,17 @@
+<%= form_for(@task,:url => { :action => :create }) do |f| %>
+  <div class="field">
+    <label>电影名称</label>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <label>网站名称</label>
+    <%= select("task", "site",Task.avalible_site) %>
+  </div>
+  <div class="field">
+    <label>电影地址</label>
+    <%= f.text_field :task_url %>
+  </div>  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

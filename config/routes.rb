@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root 'films#new'
+  root 'tasks#new'
 
   resources :films do 
     collection do 
