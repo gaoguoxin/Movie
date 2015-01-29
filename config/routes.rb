@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     collection do 
       post 'data'
       get  'get_task'
-      get 'finish_task'
+      post 'finish_task'
     end
   end
 
