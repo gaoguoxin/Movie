@@ -1,5 +1,4 @@
-#class FilmsController < ApplicationController
-class FilmsController < ActionController
+class FilmsController < ApplicationController
   #protect_from_forgery with: :null_session
 
   def finish_task
