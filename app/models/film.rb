@@ -37,14 +37,14 @@ class Film
     		play_data = film.basic_info["#{site}"]['1']
     		d = ["#{film.title}","#{film.area}","#{film.types}","#{film.director}","#{film.actors}","#{film.descript}","#{site}"]
     		if play_data.present?  # 正片数据
-			  rw = d + ['正片',"#{play_data['url']}","#{play_data['play_count']}","#{play_data['comment_count']}","#{play_data['up_count']}","#{play_data['down_count']}"]
+			  rw = d + ['正片',"#{play_data['url']}","#{play_data['play_count']}","#{play_data['comment_count'].to_i}","#{play_data['up_count'].to_i}","#{play_data['down_count'].to_i}"]
     		  sheet1.row(row_count + 1).replace(rw)
     		  row_count += 1
     		end
 
     		if pre_data.present? # 预告片数据
     			pre_data.each do |hash_data|
-    				rp =  d + ["预告片","#{hash_data['url']}","#{hash_data['play_count']}","#{hash_data['comment_count']}","#{hash_data['up_count']}","#{hash_data['down_count']}"]
+    				rp =  d + ["预告片","#{hash_data['url']}","#{hash_data['play_count']}","#{hash_data['comment_count'].to_i}","#{hash_data['up_count'].to_i}","#{hash_data['down_count'].to_i}"]
     				sheet1.row(row_count + 1).replace(rp)
     				row_count += 1
     			end
