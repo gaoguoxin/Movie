@@ -28,7 +28,7 @@ class Film
 
   def self.export_to_excel
     book   = Spreadsheet::Workbook.new
-    sheet1 = book.create_worksheet, :name => '电影数据' 
+    sheet1 = book.create_worksheet :name => '电影数据' 
     sheet1.row(0).concat %w(电影名称  地区  类型  导演  主演  简介  视频网站   视频类型   视频地址    播放数   评论数   点赞数   点踩数)
     row_count = 0
     Film.each do |film|
