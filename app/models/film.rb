@@ -11,6 +11,7 @@ class Film
   field :basic_info,type:Hash,default:{tudou:{0 =>[],1 => {}},tecent:{0 => [],1 => {}},youku:{0 => [],1 =>{}},iqiyi:{0 => [],1 => {}},hunantv:{0 => [],1 => {}}}
   field :index_info,type:Hash,default:{tudou:{0 =>[],1 => {}},tecent:{0 => [],1 => {}},youku:{0 => [],1 =>{}},iqiyi:{0 => [],1 => {}},hunantv:{0 => [],1 => {}}}
   field :status, type: Integer
+  field :imported,type:Boolean,default:false
 
 
   def self.export
